@@ -10,7 +10,8 @@ import 'rxjs/add/operator/map';
 @Component({
   selector: 'app-cmp',
   templateUrl: './recipes-and-filters.component.html',
-  styleUrls: ['./recipes-and-filters.component.scss']
+  styleUrls: ['./recipes-and-filters.component.scss'],
+  moduleId: module.id,
 })
 export class RecipesAndFiltersComponent {
   filters: Observable<Filters>;

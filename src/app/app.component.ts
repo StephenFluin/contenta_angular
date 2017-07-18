@@ -5,7 +5,8 @@ import { MaterialIconsService } from './services/material-icons/material-icons.s
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  moduleId: module.id,
 })
 export class AppComponent implements OnInit  {
   title = 'Umami Magazine';

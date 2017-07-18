@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NgZone } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -42,6 +42,8 @@ import { RecipesEffects } from './store/effects/effects';
 import { initialState } from './models/state.model';
 
 import { ContentaServiceModule, ContentaDatastore, BASE_URL } from 'contenta-angular-service';
+
+import 'rxjs/add/operator/take';
 
 @NgModule({
   declarations: [
@@ -102,4 +104,13 @@ import { ContentaServiceModule, ContentaDatastore, BASE_URL } from 'contenta-ang
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(zone: NgZone) {
+    zone.onStable.take(1).subscribe(() => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/worker-basic.min.js');
+      }
+    });
+  }
+ }

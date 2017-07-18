@@ -5,7 +5,8 @@ import { Filters } from '../../models/filters.model';
 
 @Component({
   selector: 'app-filters-cmp',
-  templateUrl: './filters.component.html'
+  templateUrl: './filters.component.html',
+  moduleId: module.id,
 })
 export class FiltersComponent {
   difficultyList = [

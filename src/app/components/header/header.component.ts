@@ -4,7 +4,8 @@ import { Component, OnInit, Output, Input, EventEmitter, ChangeDetectionStrategy
   selector: 'app-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  moduleId: module.id,
 })
 export class HeaderComponent implements OnInit {
   @Input() menu: Object[];
