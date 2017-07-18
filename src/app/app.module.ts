@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import {
   MdToolbarModule,
   MdButtonModule,
@@ -18,7 +18,7 @@ import {
   MdProgressSpinnerModule,
   MdCardModule
 } from '@angular/material';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -43,6 +43,8 @@ import { initialState } from './models/state.model';
 
 import { ContentaServiceModule, ContentaDatastore, BASE_URL } from 'contenta-angular-service';
 
+declare var ga;
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +63,7 @@ import { ContentaServiceModule, ContentaDatastore, BASE_URL } from 'contenta-ang
     ReactiveFormsModule,
     HttpModule,
     ContentaServiceModule,
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     MdInputModule,
     MdCheckboxModule,
     MdToolbarModule,
@@ -75,10 +77,10 @@ import { ContentaServiceModule, ContentaDatastore, BASE_URL } from 'contenta-ang
     MdProgressSpinnerModule,
     MdCardModule,
     RouterModule.forRoot([
-      { path: '',  pathMatch: 'full', redirectTo: 'recipes' },
-      { path: 'features', component: FeaturesComponent },
-      { path: 'recipes',  pathMatch: 'full', component: RecipesAndFiltersComponent },
-      { path: 'recipe/:id', component: RecipeDetailsComponent }
+      { path: '', pathMatch: 'full', redirectTo: 'recipes' },
+      { path: 'features', component: FeaturesComponent, data: { title: 'Features', page: 'features' } },
+      { path: 'recipes', pathMatch: 'full', component: RecipesAndFiltersComponent, data: { title: 'Recipe List', page: 'recipes' } },
+      { path: 'recipe/:id', component: RecipeDetailsComponent, data: { title: false, page: 'recipe' } }
     ]),
 
     StoreModule.forRoot(<any>{ app: appReducer }, { initialState }),
@@ -102,4 +104,17 @@ import { ContentaServiceModule, ContentaDatastore, BASE_URL } from 'contenta-ang
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(title: Title, router: Router) {
+    router.events.filter(e => e instanceof NavigationEnd).subscribe((n: NavigationEnd) => {
+      const pageTitle = router.routerState.snapshot.root.children[0].data['title'];
+      if (pageTitle) {
+        title.setTitle(pageTitle + ' | Umami Magazine');
+      } else if (pageTitle !== false) {
+        title.setTitle('Umami Magazine');
+      }
+      window.scrollTo(0, 0);
+      //ga('send', 'pageview', n.urlAfterRedirects);
+    });
+  }
+}

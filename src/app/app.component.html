@@ -3,7 +3,7 @@
   <md-sidenav #sidenav [mode]="'over'" class="sidenav">
     <app-sidenav [menu]="menu" (onRouteChange)="toggleSidenav()"></app-sidenav>
   </md-sidenav>
-  <div class="main-content">
-    <router-outlet></router-outlet>
+  <div class="main-content" [@routeAnimation]="getPage(myOutlet)">
+    <router-outlet #myOutlet="outlet"></router-outlet>
   </div>
 </md-sidenav-container>

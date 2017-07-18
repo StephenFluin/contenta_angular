@@ -13,3 +13,11 @@ button {
 svg {
     fill: currentColor;
 }
+
+#main-content {
+    position:relative;
+}
+
+#main-content>* {
+    display:block;
+}
