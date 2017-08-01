@@ -81,7 +81,8 @@ import { ContentaServiceModule, ContentaDatastore, BASE_URL } from 'contenta-ang
       { path: '',  pathMatch: 'full', redirectTo: 'recipes' },
       { path: 'features', component: FeaturesComponent },
       { path: 'recipes',  pathMatch: 'full', component: RecipesAndFiltersComponent },
-      { path: 'recipe/:id', component: RecipeDetailsComponent }
+      { path: 'recipe/:id', component: RecipeDetailsComponent },
+      { path: '**', redirectTo: 'recipes' }
     ]),
 
     StoreModule.forRoot(<any>{ app: appReducer }, { initialState }),
